@@ -1,6 +1,8 @@
 #include <stdio.h>
 
-__inline unsigned long long mul32(unsigned a, unsigned b)
+__inline unsigned long long mul32(unsigned a, unsigned b);
+
+unsigned long long mul32(unsigned a, unsigned b)
 {
 	unsigned long long c = 0;
   while (b > 0)
@@ -45,6 +47,21 @@ unsigned long long mul(unsigned long long a, unsigned long long b)
 	return ((pow48 << 48) + (pow32 << 32) + (pow16 << 16) + pow0);
 }
 
+unsigned long long add(unsigned long long a, unsigned long long b)
+{
+	unsigned a1 = (unsigned)(a >> 32);
+	unsigned a2 = (unsigned)(a & 0xFFFFFFFF);
+  unsigned b1 = (unsigned)(a >> 32);
+	unsigned b2 = (unsigned)(a & 0xFFFFFFFF);
+	
+	__asm__ __volatile__("add.cc %0, %1, %2" : "=r"(a2) : "0"(a2), "r"(b2) : "cc");
+	__asm__ __volatile__("adc %0, %1, %2" : "=r"(a1) : "0"(a1), "r"(b1) : "cc");
+	
+	unsigned long long r1 = a1;
+	unsigned long long r2 = a2;
+	return ((r1 << 32) | r2);
+}
+
 int main(void)
 {
   printf("Hello World from nSIM!\n");
@@ -52,5 +69,6 @@ int main(void)
 	unsigned long long b = 99999ULL;
 	
 	printf("%llu * %llu = %llu\n", a, b, mul(a , b));
+	printf("%llu + %llu = %llu\n", a, b, add(a , b));
   return 0;
 }

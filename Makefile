@@ -19,12 +19,12 @@ export NSIM_HOME:=$(call nsim_realpath, $(NSIM_HOME))
 
 #####################
 
-TARG=-a6#-av2em
+TARG=-av2em -Xlib
 
 PROG=hello.out
 OBJS=hello.o
 
-CFLAGS=$(TARG) -g -Hnocopyr -Xbs #Xbs for logical shifts
+CFLAGS=$(TARG) -g -Hnocopyr -Hkeepasm #-Hanno # for logical shifts
 
 all: $(PROG)
 
