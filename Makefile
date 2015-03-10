@@ -20,6 +20,7 @@ export NSIM_HOME:=$(call nsim_realpath, $(NSIM_HOME))
 #####################
 
 TARG=-av2em -Xlib
+#TARG=-arcv2hs -Xlib
 
 PROG=hello.out
 OBJS=hello.o
