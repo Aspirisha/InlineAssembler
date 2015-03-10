@@ -14,7 +14,7 @@ ifndef NSIM_HOME
 NSIM_HOME=../../
 endif
 
-include $(NSIM_HOME)/examples/common/common.mk
+include common.mk
 export NSIM_HOME:=$(call nsim_realpath, $(NSIM_HOME))
 
 #####################
